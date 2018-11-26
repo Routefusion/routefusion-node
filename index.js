@@ -41,10 +41,6 @@ let client  = {
 
 module.exports = client;
 
-client.getBeneficiary(5).then(resp => console.log(resp))
-
-
-
 function reqInstance (path, body) {
   let credentials = auth.getCredentials();
 
