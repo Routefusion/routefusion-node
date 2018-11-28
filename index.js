@@ -55,6 +55,18 @@ let client  = {
     } catch(err) {
       errorhandler(err);
     }
+  },
+
+  updateBeneficiary: async (id, body) => {
+    const path = '/beneficiaries/' + id;
+
+    let request = reqInstance(body);
+    try {
+      let response = await request.put(path, body);
+      return response.data;
+    } catch(err) {
+      errorhandler(err);
+    }
   }
 }
 
