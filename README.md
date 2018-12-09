@@ -34,7 +34,6 @@ Then, set your desired profile as an environment variable
 
 then `export RF_PROFILE=Rich`
 
----
 
 ## Users:
 
@@ -127,7 +126,7 @@ response:
     "third_party_ids": null
 }
 ```
----
+
 ## Beneficiaries
 
 ### Get Beneficiaries
@@ -331,7 +330,7 @@ response:
   "country": "US"
 }
 ```
----
+
 ## Transfers
 
 ### Create Transfer
