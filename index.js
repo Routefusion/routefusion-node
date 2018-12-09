@@ -5,6 +5,8 @@ const config = require('./config/config')[env];
 
 let client  = {
 
+  // USERS
+
   getUser: async () => {
     const path = '/users/me';
     let request = reqInstance(path);
@@ -35,6 +37,8 @@ let client  = {
     }
   },
 
+  // BENEFICIARIES
+
   getBeneficiaries: async () => {
     const path = '/beneficiaries';
     let request = reqInstance(path);
@@ -63,6 +67,32 @@ let client  = {
     let request = reqInstance(body);
     try {
       let response = await request.put(path, body);
+      return response.data;
+    } catch(err) {
+      errorhandler(err);
+    }
+  },
+
+  // TRANSFERS
+
+  createTransfer: async (body) => {
+    const path = '/transfers';
+
+    let request = reqInstance(body);
+    try {
+      let response = await request.put(path, body);
+      return response.data;
+    } catch(err) {
+      errorhandler(err);
+    }
+  },
+
+  getTransfer: async (transferUuid) => {
+    const path = `/transfers/${transferUuid}/status`
+
+    let request = reqInstance(path);
+    try {
+      let response = await request.put(path);
       return response.data;
     } catch(err) {
       errorhandler(err);
