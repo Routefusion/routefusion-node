@@ -1,6 +1,6 @@
 # Routefusion Node.js SDK
 
-### Get Started
+## Get Started
 For API access, register for an API key at https://routefusion.co/sign_up.
 
 Aftern signup, login and go to 'developer'. Create an API key _(CLIENT_ID) / (SECRET)_ pair.
@@ -33,3 +33,336 @@ Then, set your desired profile as an environment variable
 ```
 
 then `export RF_PROFILE=Rich`
+
+---
+
+## Users:
+
+### Get User
+
+```js
+const routefusion = require('routefusion-sdk');
+
+routefusion.getUser()
+  .then(resp => resp)
+  .catch(err => err)
+```
+response:
+```json
+{
+    "id": 1,
+    "uuid": "d48cb8b3-8945-4748-9bed-kd3d9vc15m",
+    "wyre_id": null,
+    "wyre_pusher_channel": null,
+    "username": "",
+    "first_name": "Rico",
+    "last_name": "Suave",
+    "occupation": "",
+    "date_of_birth": "1980-03-12",
+    "email": "email@email.com",
+    "phone_number": "",
+    "country": "US",
+    "city": "Austin",
+    "street": "100 Congress",
+    "state": "TX",
+    "zipcode": "78750",
+    "verified": true,
+    "admin": false,
+    "type": null,
+    "verification_submitted": true,
+    "company_name": null,
+    "created_at": "2018-08-10T22:31:55.972Z",
+    "updated_at": "2018-12-09T20:56:27.258Z",
+    "deleted_at": null,
+    "password_reset_token": null,
+    "password_reset_token_expires_at": null,
+    "third_party_ids": null
+}
+```
+
+### Update User
+
+```js
+const routefusion = require('routefusion-sdk');
+
+let body = {
+  first_name: "Bob",
+  last_name: "TheBuilder",
+  street: "1250 San Jacinto"
+};
+
+routefusion.updateUser(body)
+  .then(resp => resp)
+  .catch(err => err)
+```
+response:
+```json
+{
+    "id": 1,
+    "uuid": "d48cb8b3-8945-4748-9bed-kd3d9vc15m",
+    "wyre_id": null,
+    "wyre_pusher_channel": null,
+    "username": "",
+    "first_name": "Bob",
+    "last_name": "TheBuilder",
+    "occupation": "",
+    "date_of_birth": "1980-03-12",
+    "email": "email@email.com",
+    "phone_number": "",
+    "country": "US",
+    "city": "Austin",
+    "street": "1250 San Jacinto",
+    "state": "TX",
+    "zipcode": "78750",
+    "verified": true,
+    "admin": false,
+    "type": null,
+    "verification_submitted": true,
+    "company_name": null,
+    "created_at": "2018-08-10T22:31:55.972Z",
+    "updated_at": "2018-12-09T20:56:27.258Z",
+    "deleted_at": null,
+    "password_reset_token": null,
+    "password_reset_token_expires_at": null,
+    "third_party_ids": null
+}
+```
+---
+## Beneficiaries
+
+### Get Beneficiaries
+```js
+const routefusion = require('routefusion-sdk');
+
+routefusion.getBenefiaries()
+  .then(resp => resp)
+  .catch(err => err)
+```
+response:
+```json
+[
+  {
+    "id": 6,
+    "uuid": "b45b64de-c620-4f18-bfad-5bdefcb522c1",
+    "user_id": 1,
+    "company_name": "",
+    "first_name_on_account": "China",
+    "last_name_on_accout": "China",
+    "type": "personal",
+    "bank_name": "中国建设银行",
+    "branch_name": "中国建设银行",
+    "bank_city": "中国建设银行",
+    "account_type": "personal",
+    "account_number": "12345678910",
+    "beneficiary_email": "china.china@china.com",
+    "beneficiary_phone_number": "1231231234",
+    "country": "CN",
+    "city": null,
+    "bank_province": "中国建设银行",
+    "currency": "CNY",
+    "cpfcnpj": ""
+  },
+  {
+    ...
+]
+```
+
+### Get Beneficiary
+
+```js
+const routefusion = require('routefusion-sdk');
+
+let beneficiaryId = 6;
+
+routefusion.getBenefiary(beneficiaryId)
+  .then(resp => resp)
+  .catch(err => err)
+```
+
+response:
+
+```json
+{
+  "id": 6,
+  "uuid": "b45b64de-c620-4f18-bfad-5bdefcb522c1",
+  "user_id": 1,
+  "company_name": "",
+  "first_name_on_account": "China",
+  "last_name_on_accout": "China",
+  "type": "personal",
+  "bank_name": "中国建设银行",
+  "branch_name": "中国建设银行",
+  "bank_city": "中国建设银行",
+  "account_type": "personal",
+  "account_number": "12345678910",
+  "beneficiary_email": "china.china@china.com",
+  "beneficiary_phone_number": "1231231234",
+  "country": "CN",
+  "city": null,
+  "bank_province": "中国建设银行",
+  "currency": "CNY",
+  "cpfcnpj": ""
+}
+```
+
+### Create Beneficiary
+
+```js
+const routefusion = require('routefusion-sdk');
+
+let beneficiaryData = {
+  company_name: "beneficiaryCompanyName",
+  first_name_on_account: "companyOwnerFirstName",
+  last_name_on_account: "companyOwnerLastName",
+  type: "business",
+  currency: "USD",
+  bank_name: "Citibank",
+  branch_name: "",
+  bank_address1: "5252 Madison Ave.",
+  bank_address2: "",
+  bank_city: "New York City",
+  bank_state_province: "New York",
+  bank_postal_code: "00000",
+  bank_country: "US", // 2 letter code
+  bank_code: "",
+  branch_code: "",
+  swift_bic: "CITINY732", // 8 or 11 character code
+  account_type: "business",
+  account_number: "2315345432",
+  routing_number: "113193532",
+  clabe: "",
+  tax_number: "",
+  cpfcpnj: "",
+  email: "company@email.com",
+  phone_number: "",
+  address1: "beneficiaryAddress",
+  address2: "",
+  city: "beneficiaryCity",
+  state_province: "beneficiaryStateOrProvince",
+  postal_code: "00000",
+  country: "US" // 2 letter code
+};
+
+routefusion.createBenefiary(beneficiaryData)
+  .then(resp => resp)
+  .catch(err => err)
+```
+response:
+```json
+{
+  "company_name": "beneficiaryCompany",
+  "first_name_on_account": "companyOwnerFirstName",
+  "last_name_on_account": "companyOwnerLastName",
+  "type": "business",
+  "currency": "USD",
+  "bank_name": "Citibank",
+  "branch_name": "",
+  "bank_address1": "5252 Madison Ave.",
+  "bank_address2": "",
+  "bank_city": "New York City",
+  "bank_state_province": "New York",
+  "bank_postal_code": "00000",
+  "bank_country": "US",
+  "bank_code": "",
+  "branch_code": "",
+  "swift_bic": "CITINY732",
+  "account_type": "business",
+  "account_number": "2315345432",
+  "routing_number": "113193532",
+  "clabe": "",
+  "tax_number": "",
+  "cpfcpnj": "",
+  "email": "company@email.com",
+  "phone_number": "",
+  "address1": "beneficiaryAddress",
+  "address2": "",
+  "city": "beneficiaryCity",
+  "state_province": "beneficiaryStateOrProvince",
+  "postal_code": "00000",
+  "country": "US"
+}
+```
+
+### Update Beneficiary
+
+```js
+const routefusion = require('routefusion-sdk');
+
+let beneficiaryData = {
+  address1: "newBeneficiaryAddress",
+};
+
+routefusion.updateBenefiary(beneficiaryData)
+  .then(resp => resp)
+  .catch(err => err)
+```
+response:
+```json
+{
+  "company_name": "beneficiaryCompany",
+  "first_name_on_account": "companyOwnerFirstName",
+  "last_name_on_account": "companyOwnerLastName",
+  "type": "business",
+  "currency": "USD",
+  "bank_name": "Citibank",
+  "branch_name": "",
+  "bank_address1": "5252 Madison Ave.",
+  "bank_address2": "",
+  "bank_city": "New York City",
+  "bank_state_province": "New York",
+  "bank_postal_code": "00000",
+  "bank_country": "US",
+  "bank_code": "",
+  "branch_code": "",
+  "swift_bic": "CITINY732",
+  "account_type": "business",
+  "account_number": "2315345432",
+  "routing_number": "113193532",
+  "clabe": "",
+  "tax_number": "",
+  "cpfcpnj": "",
+  "email": "company@email.com",
+  "phone_number": "",
+  "address1": "newBeneficiaryAddress",
+  "address2": "",
+  "city": "beneficiaryCity",
+  "state_province": "beneficiaryStateOrProvince",
+  "postal_code": "00000",
+  "country": "US"
+}
+```
+---
+## Transfers
+
+### Create Transfer
+```js
+const routefusion = require('routefusion-sdk');
+
+let transferData = {
+  beneficiary_id: 6,
+  source_amount: 10000
+};
+
+routefusion.createTransfer(transferData)
+  .then(resp => resp)
+  .catch(err => err)
+```
+
+### Get Transfer
+```js
+const routefusion = require('routefusion-sdk');
+
+let transferUuid = '1c511f62-f8b1-4070-a27a-c1581e7fg79a';
+
+routefusion.createTransfer(transferUuid)
+  .then(resp => resp)
+  .catch(err => err)
+```
+
+response:
+```json
+{
+    "state": "processing",
+    "created_at": "2018-12-03T20:35:31.017Z"
+}
+```
