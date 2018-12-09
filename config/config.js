@@ -1,8 +1,8 @@
 module.exports = {
   "development": {
-    "apiUri": "http://localhost:3001/v1"
+    "apiUri": process.env.RF_API_URI || "http://localhost:3001/v1"
   },
   "production": {
-    "apiUri": "https://api-beta.routefusion.co/v1"
+    "apiUri": process.env.RF_API_URI || "https://api-beta.routefusion.co/v1"
   }
 }
