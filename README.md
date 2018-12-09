@@ -32,10 +32,17 @@ secret_key=57B1144d25FEB3a8c68a9A6a803844f09d644278947dB63E211EFc43D49Ed26E
 Then, set your desired profile as an environment variable
 ```
 
-then `export RF_PROFILE=Rich`
+then export your desired profile
+```bash
+export RF_PROFILE=Rich
+```
 
+Lastly, be sure to export the routefusion uri:
+```bash
+export RF_API_URI=https://api-beta.routefusion.co/v1  #sandbox uri
+```
 
-## Users:
+## Users
 
 ### Get User
 
