@@ -11,7 +11,7 @@ let client = {
 
     client.clientId = credentials.clientId;
     client.secret = credentials.secretKey;
-    client.baseURL = config.baseURL || 'https://api-beta.routefusion.co/v1';
+    client.baseURL = config.baseURL || 'https://api.routefusion.co/v1';
     return client;
   },
 

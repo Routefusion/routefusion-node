@@ -15,7 +15,7 @@ Initialize the sdk like so
 const routefusion = require('routefusion-sdk').init({
   cliendId: '137F1AA06E004F96BEE9B4644F8F7A46CDA45CACB0052B2583D674C530252B6C',
   secretKey: '6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59',
-  baseURL: 'https://api-beta.routefusion.co/v1'
+  baseURL: 'https://sandbox.api.routefusion.co/v1'
 });
 ```
 
