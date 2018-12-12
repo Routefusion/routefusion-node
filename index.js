@@ -9,9 +9,10 @@ let client = {
 
     if (!credentials.clientId || !credentials.secretKey) throw new Error('clientId or secret not found');
 
-    this.clientId = credentials.clientId;
-    this.secret = credentials.secretKey;
-    this.baseURL = config.baseURL || 'https://api-beta.routefusion.co/v1';
+    client.clientId = credentials.clientId;
+    client.secret = credentials.secretKey;
+    client.baseURL = config.baseURL || 'https://api-beta.routefusion.co/v1';
+    return client;
   },
 
 
