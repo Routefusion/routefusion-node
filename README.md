@@ -10,6 +10,20 @@ If you plan to use the SDK set your API key / secret pair as environment variabl
 _Note: API and SDK are compatible with async / await._
 
 ---
+Initialize the sdk like so
+```js
+const routefusion = require('routefusion-sdk').init({
+  cliendId: '137F1AA06E004F96BEE9B4644F8F7A46CDA45CACB0052B2583D674C530252B6C',
+  secretKey: '6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59',
+  baseURL: 'https://api-beta.routefusion.co/v1'
+});
+```
+
+Or, if you would like to use environment variables or a credientials file instead initialize without any arguments and setup your credentials. _This pattern is used in the rest of the docs_
+
+```js
+const routefusion = require('routefusion-sdk').init();
+```
 
 Set environment variables for the SDK to access
 
@@ -37,17 +51,12 @@ then export your desired profile
 export RF_PROFILE=Rich
 ```
 
-Lastly, be sure to export the routefusion uri:
-```bash
-export RF_API_URI=https://api-beta.routefusion.co/v1  #sandbox uri
-```
-
 ## Users
 
 ### Get User
 
 ```js
-const routefusion = require('routefusion-sdk');
+const routefusion = require('routefusion-sdk').init();
 
 routefusion.getUser()
   .then(resp => resp)
@@ -89,7 +98,7 @@ response:
 ### Update User
 
 ```js
-const routefusion = require('routefusion-sdk');
+const routefusion = require('routefusion-sdk').init();
 
 let body = {
   first_name: "Bob",
@@ -138,7 +147,7 @@ response:
 
 ### Get Beneficiaries
 ```js
-const routefusion = require('routefusion-sdk');
+const routefusion = require('routefusion-sdk').init();
 
 routefusion.getBenefiaries()
   .then(resp => resp)
@@ -176,7 +185,7 @@ response:
 ### Get Beneficiary
 
 ```js
-const routefusion = require('routefusion-sdk');
+const routefusion = require('routefusion-sdk').init();
 
 let beneficiaryId = 6;
 
@@ -214,7 +223,7 @@ response:
 ### Create Beneficiary
 
 ```js
-const routefusion = require('routefusion-sdk');
+const routefusion = require('routefusion-sdk').init();
 
 let beneficiaryData = {
   company_name: "beneficiaryCompanyName",
@@ -292,7 +301,7 @@ response:
 ### Update Beneficiary
 
 ```js
-const routefusion = require('routefusion-sdk');
+const routefusion = require('routefusion-sdk').init();
 
 let beneficiaryData = {
   address1: "newBeneficiaryAddress",
@@ -342,7 +351,7 @@ response:
 
 ### Create Transfer
 ```js
-const routefusion = require('routefusion-sdk');
+const routefusion = require('routefusion-sdk').init();
 
 let transferData = {
   beneficiary_id: 6,
@@ -356,7 +365,7 @@ routefusion.createTransfer(transferData)
 
 ### Get Transfer
 ```js
-const routefusion = require('routefusion-sdk');
+const routefusion = require('routefusion-sdk').init();
 
 let transferUuid = '1c511f62-f8b1-4070-a27a-c1581e7fg79a';
 
