@@ -1,9 +1,19 @@
 const axios = require('axios');
 const auth = require('./lib/auth');
 const env = process.env.NODE_ENV || "development";
-const config = require('./config/config')[env];
 
-let client  = {
+let client = {
+
+  init: (config = {}) => {
+    const credentials = auth.getCredentials(config)
+
+    if (!credentials.clientId || !credentials.secretKey) throw new Error('clientId or secret not found');
+
+    this.clientId = credentials.clientId;
+    this.secret = credentials.secretKey;
+    this.baseURL = config.baseURL || 'https://api-beta.routefusion.co/v1';
+  },
+
 
   // USERS
 
@@ -100,11 +110,23 @@ let client  = {
   },
 
   getTransfer: async (transferUuid) => {
-    const path = `/transfers/${transferUuid}/status`
+    const path = `/transfers/${transferUuid}`;
 
     let request = reqInstance(path);
     try {
-      let response = await request.put(path);
+      let response = await request.get(path);
+      return response.data;
+    } catch(err) {
+      errorhandler(err);
+    }
+  },
+
+  getAllTransfers: async () => {
+    const path = `/transfers`;
+
+    let request = reqInstance(path);
+    try {
+      let response = await request.get(path);
       return response.data;
     } catch(err) {
       errorhandler(err);
@@ -117,13 +139,11 @@ module.exports = client;
 // for GET requests, data === path
 // for POST requests, data === body
 function reqInstance (data) {
-  let credentials = auth.getCredentials();
-
   return axios.create({
-    baseURL: config.apiUri,
+    baseURL: client.baseURL,
     headers: {
-      'client-id': credentials.clientId,
-      'signature': auth.createDigest(data, credentials.secretKey)
+      'client-id': client.clientId,
+      'signature': auth.createDigest(data, client.secret)
     }
   })
 }
