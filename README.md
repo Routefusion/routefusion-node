@@ -12,10 +12,17 @@ _Note: API and SDK are compatible with async / await._
 ---
 Initialize an instance of the sdk like so
 ```js
+<<<<<<< HEAD
 const rf = require('routefusion-sdk').Instance({
   RF_CLIENT_ID: '137F1AA06E004F96BEE9B4644F8F7A46CDA45CACB0052B2583D674C530252B6C',
   RF_SECRET: '6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59',
   RF_BASE_URL: 'https://sandbox.api.routefusion.co/v1' // will default to sandbox
+=======
+const routefusion = require('routefusion-sdk').init({
+  cliendId: '137F1AA06E004F96BEE9B4644F8F7A46CDA45CACB0052B2583D674C530252B6C',
+  secretKey: '6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59',
+  baseURL: 'https://sandbox.api.routefusion.co/v1'
+>>>>>>> e9ebeb382a8f67f3fa4f5a19ab22e7eace70c65e
 });
 ```
 
