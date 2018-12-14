@@ -1,166 +1,115 @@
-const axios = require('axios');
-const auth = require('./lib/auth');
-const env = process.env.NODE_ENV || "development";
+var axios = require('axios');
+var auth = require('./lib/auth');
+var config = require('./lib/config');
 
-let client = {
+function client(localConfig) {
+  localConfig = localConfig || {};
+  var _config = Object.assign(config, localConfig);
 
-  init: (config = {}) => {
-    const credentials = auth.getCredentials(config)
-
-    if (!credentials.clientId || !credentials.secretKey) throw new Error('clientId or secret not found');
-
-    client.clientId = credentials.clientId;
-    client.secret = credentials.secretKey;
-    client.baseURL = config.baseURL || 'https://api.routefusion.co/v1';
-    return client;
-  },
-
-
-  // USERS
-
-  getUser: async () => {
-    const path = '/users/me';
-    let request = reqInstance(path);
-    try {
-      let response = await request.get(path);
-      return response.data;
-    } catch(err) {
-      if (err.data) {
-        console.log(err.data);
-      } else {
-        errorhandler(err);
+  function reqInstance (method, path, data) {
+    var request = axios.create({
+      baseURL: _config.RF_BASE_URL + '/v1',
+      headers: {
+        'client-id': _config.RF_CLIENT_ID,
+        'signature': auth.createDigest(path, data, _config.RF_SECRET)
       }
+    });
+    switch (method) {
+      case 'GET':
+      case 'get':
+        request = request.get(path);
+        break;
+      case 'PUT':
+      case 'put':
+        request = request.put(path, data);
+        break;
+      case 'POST':
+      case 'post':
+        request = request.post(path, data);
+        break;
+      case 'PATCH':
+      case 'patch':
+        request = request.patch(path, data);
+        break;
+      case 'DELETE':
+      case 'delete':
+        request = request.delete(path)
+        break;
     }
-  },
-
-  updateUser: async (body) => {
-    if (typeof(body) !== 'object') {
-      errorhandler( new Error('body must be an object') )
-    }
-
-    const path = '/users/me';
-    let request = reqInstance(body);
-    try {
-      let response = await request.put(path, body);
-      return response.data;
-    } catch(err) {
-      errorhandler(err);
-    }
-  },
-
-  // BENEFICIARIES
-
-  getBeneficiaries: async () => {
-    const path = '/beneficiaries';
-    let request = reqInstance(path);
-    try {
-      let response = await request.get(path);
-      return response.data;
-    } catch(err) {
-      errorhandler(err);
-    }
-  },
-
-  getBeneficiary: async (id) => {
-    const path = '/beneficiaries/' + id;
-    let request = reqInstance(path);
-    try {
-      let response = await request.get(path);
-      return response.data;
-    } catch(err) {
-      errorhandler(err);
-    }
-  },
-
-  createBeneficiary: async (body) => {
-    const path = '/beneficiaries/';
-
-    let request = reqInstance(body);
-    try {
-      let response = await request.post(path, body);
-      return response.data;
-    } catch(err) {
-      errorhandler(err);
-    }
-  },
-
-  updateBeneficiary: async (id, body) => {
-    const path = '/beneficiaries/' + id;
-
-    let request = reqInstance(body);
-    try {
-      let response = await request.put(path, body);
-      return response.data;
-    } catch(err) {
-      errorhandler(err);
-    }
-  },
-
-  // TRANSFERS
-
-  createTransfer: async (body) => {
-    const path = '/transfers';
-
-    let request = reqInstance(body);
-    try {
-      let response = await request.put(path, body);
-      return response.data;
-    } catch(err) {
-      errorhandler(err);
-    }
-  },
-
-  getTransfer: async (transferUuid) => {
-    const path = `/transfers/${transferUuid}`;
-
-    let request = reqInstance(path);
-    try {
-      let response = await request.get(path);
-      return response.data;
-    } catch(err) {
-      errorhandler(err);
-    }
-  },
-
-  getAllTransfers: async () => {
-    const path = `/transfers`;
-
-    let request = reqInstance(path);
-    try {
-      let response = await request.get(path);
-      return response.data;
-    } catch(err) {
-      errorhandler(err);
-    }
+    return request
+      .then(function (resp) {
+        return resp.data;
+      })
+      .catch(function (err) {
+        return handleError(err);
+      })
   }
-}
 
-module.exports = client;
+  function handleError(err) {
+    if (err.response && err.response.data) return err.response.data;
+    if (err.message) return err.message;
+    if (err.error) return err.error;
+  }
 
-// for GET requests, data === path
-// for POST requests, data === body
-function reqInstance (data) {
-  return axios.create({
-    baseURL: client.baseURL,
-    headers: {
-      'client-id': client.clientId,
-      'signature': auth.createDigest(data, client.secret)
-    }
-  })
-}
+  return {
 
-function errorhandler(err) {
-  let type = ['response', 'message', 'error'];
+    // USERS
+    getUser: function () {
+      return reqInstance('GET', '/users/me')
 
-  Object.keys(err).forEach(e => {
-    if (type.includes(e)) {
-      if (e === 'response') {
-        console.log(err[e].data);
-        return err[e].data;
+    },
+
+    updateUser: function (body) {
+      // check body is not null, not an array, is a valid object
+      if (body !== null && !(body instanceof Array) && typeof body !== 'object') {
+        return Promise.reject(function () {
+          throw Error('body must be an object');
+        });
       }
+      return reqInstance('PUT', '/users/me', body);
+    },
 
-      console.log(err[e]);
-      return err[e];
+    // BENEFICIARIES
+
+    getBeneficiaries: function () {
+      return reqInstance('GET', '/beneficiaries');
+    },
+
+    getBeneficiary: function (id) {
+      return reqInstance('GET', '/beneficiaries/' + id);
+    },
+
+    createBeneficiary: function (body) {
+      return reqInstance('POST', '/beneficiaries', body);
+    },
+
+    updateBeneficiary: function (id, body) {
+      return reqInstance('PUT', '/beneficiaries/' + id, body);
+    },
+
+    // TRANSFERS
+
+    createTransfer: function (body) {
+      return reqInstance('POST', '/transfers', body);
+    },
+
+    getTransfer: function (transferUuid) {
+      return reqInstance('GET', '/transfers/' + transferUuid);
+    },
+
+    getAllTransfers: function () {
+      return reqInstance('GET', '/transfers');
+    },
+
+    getBalance: function () {
+      return reqInstance('GET', '/balance');
     }
-  })
-}
+  };
+};
+
+module.exports = client();
+
+module.exports.Instance = function(localConfig) {
+  localConfig = localConfig || {};
+  return client(localConfig);
+};
