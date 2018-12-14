@@ -1,5 +1,13 @@
 # Routefusion Node.js SDK
 
+## Contents
+- [Get Started](#get_started)
+- [Users](#Users)
+- [Beneficiaries](#Beneficiaries)
+- [Transfers](#Transfers)
+- [Balance](#Balance)
+
+<a name="get_started"></a>
 ## Get Started
 For API access, register for an API key at https://routefusion.co/sign_up.
 
