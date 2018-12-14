@@ -4,14 +4,11 @@ var config = require('./lib/config');
 
 function client(localConfig) {
   localConfig = localConfig || {};
-  // for scope
-  var _config = Object.assign(localConfig, config);
+  var _config = Object.assign(config, localConfig);
 
-  // for GET requests, data === path
-  // for POST requests, data === body
   function reqInstance (method, path, data) {
     var request = axios.create({
-      baseURL: _config.RF_BASE_URL,
+      baseURL: _config.RF_BASE_URL + '/v1',
       headers: {
         'client-id': _config.RF_CLIENT_ID,
         'signature': auth.createDigest(path, data, _config.RF_SECRET)
@@ -44,31 +41,17 @@ function client(localConfig) {
         return resp.data;
       })
       .catch(function (err) {
-        return err.response.data;
+        return handleError(err);
       })
   }
 
-  // function errorhandler(err) {
-  //   var type = ['response', 'message', 'error'];
-
-  //   Object.keys(err).forEach(e => {
-  //     if (type.includes(e)) {
-  //       if (e === 'response') {
-  //         console.log(err[e].data);
-  //         return err[e].data;
-  //       }
-
-  //       console.log(err[e]);
-  //       return err[e];
-  //     }
-  //   })
-  // }
+  function handleError(err) {
+    if (err.response && err.response.data) return err.response.data;
+    if (err.message) return err.message;
+    if (err.error) return err.error;
+  }
 
   return {
-
-    setConfig: function (config) {
-      _config = Object.assign(_config, config || {});
-    },
 
     // USERS
     getUser: function () {
@@ -101,7 +84,7 @@ function client(localConfig) {
     },
 
     updateBeneficiary: function (id, body) {
-      return reqInstance('PUT', '/beneficiaries', body);
+      return reqInstance('PUT', '/beneficiaries/' + id, body);
     },
 
     // TRANSFERS
@@ -116,6 +99,10 @@ function client(localConfig) {
 
     getAllTransfers: function () {
       return reqInstance('GET', '/transfers');
+    },
+
+    getBalance: function () {
+      return reqInstance('GET', '/balance');
     }
   };
 };
@@ -123,6 +110,6 @@ function client(localConfig) {
 module.exports = client();
 
 module.exports.Instance = function(localConfig) {
-  localConfig = config || {};
+  localConfig = localConfig || {};
   return client(localConfig);
 };

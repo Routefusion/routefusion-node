@@ -10,26 +10,26 @@ If you plan to use the SDK set your API key / secret pair as environment variabl
 _Note: API and SDK are compatible with async / await._
 
 ---
-Initialize the sdk like so
+Initialize an instance of the sdk like so
 ```js
-const routefusion = require('routefusion-sdk').init({
-  cliendId: '137F1AA06E004F96BEE9B4644F8F7A46CDA45CACB0052B2583D674C530252B6C',
-  secretKey: '6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59',
-  baseURL: 'https://api-beta.routefusion.co/v1'
+const rf = require('routefusion-sdk').Instance({
+  RF_CLIENT_ID: '137F1AA06E004F96BEE9B4644F8F7A46CDA45CACB0052B2583D674C530252B6C',
+  RF_SECRET: '6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59',
+  RF_BASE_URL: 'https://sandbox.api.routefusion.co/v1' // will default to sandbox
 });
 ```
 
 Or, if you would like to use environment variables or a credientials file instead initialize without any arguments and setup your credentials. _This pattern is used in the rest of the docs_
 
 ```js
-const routefusion = require('routefusion-sdk').init();
+const rf = require('routefusion-sdk');
 ```
 
 Set environment variables for the SDK to access
 
 ```bash
 export RF_CLIENT_ID=137F1AA06E004F96BEE9B4644F8F7A46CDA45CACB0052B2583D674C530252B6C
-export RF_SECRET_KEY=6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59
+export RF_SECRET=6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59
 ```
 Or, create a credentials file
 
@@ -38,11 +38,11 @@ Or, create a credentials file
 
 [Rich] #profile name
 client_id=137F1AA06E004F96BEE9B4644F8F7A46CDA45CACB0052B2583D674C530252B6C
-secret_key=6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59
+secret=6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59
 
 [Paul]
 client_id=25D0A96BA42FBFDF3D68A86950523B23DBF65F276D3D340DC2FA5716D7662548
-secret_key=57B1144d25FEB3a8c68a9A6a803844f09d644278947dB63E211EFc43D49Ed26E
+secret=57B1144d25FEB3a8c68a9A6a803844f09d644278947dB63E211EFc43D49Ed26E
 Then, set your desired profile as an environment variable
 ```
 
@@ -50,15 +50,16 @@ then export your desired profile
 ```bash
 export RF_PROFILE=Rich
 ```
+_Note: The credentials lookup priority is Instance config, environment variables, then credentials file_
 
 ## Users
 
 ### Get User
 
 ```js
-const routefusion = require('routefusion-sdk').init();
+const rf = require('routefusion-sdk');
 
-routefusion.getUser()
+rf.getUser()
   .then(resp => resp)
   .catch(err => err)
 ```
@@ -98,7 +99,7 @@ response:
 ### Update User
 
 ```js
-const routefusion = require('routefusion-sdk').init();
+const rf = require('routefusion-sdk');
 
 let body = {
   first_name: "Bob",
@@ -106,7 +107,7 @@ let body = {
   street: "1250 San Jacinto"
 };
 
-routefusion.updateUser(body)
+rf.updateUser(body)
   .then(resp => resp)
   .catch(err => err)
 ```
@@ -147,9 +148,9 @@ response:
 
 ### Get Beneficiaries
 ```js
-const routefusion = require('routefusion-sdk').init();
+const rf = require('routefusion-sdk');
 
-routefusion.getBenefiaries()
+rf.getBenefiaries()
   .then(resp => resp)
   .catch(err => err)
 ```
@@ -185,11 +186,11 @@ response:
 ### Get Beneficiary
 
 ```js
-const routefusion = require('routefusion-sdk').init();
+const rf = require('routefusion-sdk');
 
 let beneficiaryId = 6;
 
-routefusion.getBenefiary(beneficiaryId)
+rf.getBenefiary(beneficiaryId)
   .then(resp => resp)
   .catch(err => err)
 ```
@@ -223,7 +224,7 @@ response:
 ### Create Beneficiary
 
 ```js
-const routefusion = require('routefusion-sdk').init();
+const rf = require('routefusion-sdk');
 
 let beneficiaryData = {
   company_name: "beneficiaryCompanyName",
@@ -258,7 +259,7 @@ let beneficiaryData = {
   country: "US" // 2 letter code
 };
 
-routefusion.createBenefiary(beneficiaryData)
+rf.createBenefiary(beneficiaryData)
   .then(resp => resp)
   .catch(err => err)
 ```
@@ -301,13 +302,13 @@ response:
 ### Update Beneficiary
 
 ```js
-const routefusion = require('routefusion-sdk').init();
+const rf = require('routefusion-sdk');
 
 let beneficiaryData = {
   address1: "newBeneficiaryAddress",
 };
 
-routefusion.updateBenefiary(beneficiaryData)
+rf.updateBenefiary(beneficiaryData)
   .then(resp => resp)
   .catch(err => err)
 ```
@@ -351,25 +352,57 @@ response:
 
 ### Create Transfer
 ```js
-const routefusion = require('routefusion-sdk').init();
+const rf = require('routefusion-sdk');
 
 let transferData = {
   beneficiary_id: 6,
-  source_amount: 10000
+  source_amount: 1000
 };
 
-routefusion.createTransfer(transferData)
+rf.createTransfer(transferData)
   .then(resp => resp)
   .catch(err => err)
 ```
 
+response:
+```json
+{
+    "id": 120,
+    "user_id": 1,
+    "account_id": null,
+    "beneficiary_id": 6,
+    "source_amount": "1000",
+    "exchange_rate": null,
+    "fee": null,
+    "currency_pairs": "USDUSD",
+    "created_at": "2018-12-14T00:41:38.661Z",
+    "updated_at": null,
+    "uuid": "b1e3f2fa-27f1-4424-987c-105009fed4fe",
+    "state": "created",
+    "payout_partner_uuid": null,
+    "authorizing_ip": "::1",
+    "transfer_states": [
+        {
+            "state": "created",
+            "created_at": "2018-12-14T00:41:38.643Z"
+        }
+    ],
+    "source_currency": "USD",
+    "destination_amount": null,
+    "destination_currency": "USD",
+    "payout_partner_fee": null,
+    "payout_partner": null,
+    "payout_partner_status": null
+}
+```
+
 ### Get Transfer
 ```js
-const routefusion = require('routefusion-sdk').init();
+const rf = require('routefusion-sdk');
 
 let transferUuid = '1c511f62-f8b1-4070-a27a-c1581e7fg79a';
 
-routefusion.createTransfer(transferUuid)
+rf.createTransfer(transferUuid)
   .then(resp => resp)
   .catch(err => err)
 ```
@@ -379,5 +412,24 @@ response:
 {
     "state": "processing",
     "created_at": "2018-12-03T20:35:31.017Z"
+}
+```
+
+## Balance
+
+### Get Balance
+```js
+const rf = require('routefusion-sdk');
+
+rf.getBalance()
+  .then(resp => resp)
+  .catch(err => err)
+```
+
+response
+
+```json
+{
+    "balance": 200
 }
 ```
