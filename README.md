@@ -23,14 +23,14 @@ Initialize an instance of the sdk like so
 const rf = require('routefusion-sdk').Instance({
   RF_CLIENT_ID: '137F1AA06E004F96BEE9B4644F8F7A46CDA45CACB0052B2583D674C530252B6C',
   RF_SECRET: '6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59',
-  RF_BASE_URL: 'https://sandbox.api.routefusion.co/v1' // will default to sandbox
+  RF_BASE_URL: 'https://sandbox.api.routefusion.co' // will default to sandbox
 });
 ```
 
 Or, if you would like to use environment variables or a credientials file instead initialize without any arguments and setup your credentials. _This pattern is used in the rest of the docs_
 
 ```js
-const rf = require('routefusion-sdk');
+const rf = require('routefusion-sdk').Instance();
 ```
 
 Set environment variables for the SDK to access
@@ -38,6 +38,7 @@ Set environment variables for the SDK to access
 ```bash
 export RF_CLIENT_ID=137F1AA06E004F96BEE9B4644F8F7A46CDA45CACB0052B2583D674C530252B6C
 export RF_SECRET=6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59
+export RF_BASE_URL='https://sandbox.api.routefusion.co' # will default to sandbox
 ```
 Or, create a credentials file
 
@@ -47,6 +48,7 @@ Or, create a credentials file
 [Rich] #profile name
 client_id=137F1AA06E004F96BEE9B4644F8F7A46CDA45CACB0052B2583D674C530252B6C
 secret=6C075288B9E43af4e329d9999dEB180D6b5fbE6F1565939DBCabB626ae886C59
+base_url=https://sandbox.api.routefusion.co  # will default to sandbox
 
 [Paul]
 client_id=25D0A96BA42FBFDF3D68A86950523B23DBF65F276D3D340DC2FA5716D7662548
@@ -65,7 +67,7 @@ _Note: The credentials lookup priority is Instance config, environment variables
 ### Get User
 
 ```js
-const rf = require('routefusion-sdk');
+const rf = require('routefusion-sdk').Instance();
 
 rf.getUser()
   .then(resp => resp)
@@ -107,7 +109,7 @@ response:
 ### Update User
 
 ```js
-const rf = require('routefusion-sdk');
+const rf = require('routefusion-sdk').Instance();
 
 let body = {
   first_name: "Bob",
@@ -156,7 +158,7 @@ response:
 
 ### Get Beneficiaries
 ```js
-const rf = require('routefusion-sdk');
+const rf = require('routefusion-sdk').Instance();
 
 rf.getBenefiaries()
   .then(resp => resp)
@@ -194,7 +196,7 @@ response:
 ### Get Beneficiary
 
 ```js
-const rf = require('routefusion-sdk');
+const rf = require('routefusion-sdk').Instance();
 
 let beneficiaryId = 6;
 
@@ -232,7 +234,7 @@ response:
 ### Create Beneficiary
 
 ```js
-const rf = require('routefusion-sdk');
+const rf = require('routefusion-sdk').Instance();
 
 let beneficiaryData = {
   company_name: "beneficiaryCompanyName",
@@ -310,7 +312,7 @@ response:
 ### Update Beneficiary
 
 ```js
-const rf = require('routefusion-sdk');
+const rf = require('routefusion-sdk').Instance();
 
 let beneficiaryData = {
   address1: "newBeneficiaryAddress",
@@ -360,7 +362,7 @@ response:
 
 ### Create Transfer
 ```js
-const rf = require('routefusion-sdk');
+const rf = require('routefusion-sdk').Instance();
 
 let transferData = {
   beneficiary_id: 6,
@@ -406,7 +408,7 @@ response:
 
 ### Get Transfer
 ```js
-const rf = require('routefusion-sdk');
+const rf = require('routefusion-sdk').Instance();
 
 let transferUuid = '1c511f62-f8b1-4070-a27a-c1581e7fg79a';
 
@@ -427,7 +429,7 @@ response:
 
 ### Get Balance
 ```js
-const rf = require('routefusion-sdk');
+const rf = require('routefusion-sdk').Instance();
 
 rf.getBalance()
   .then(resp => resp)
