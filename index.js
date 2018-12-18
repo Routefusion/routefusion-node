@@ -1,113 +1,13 @@
-var axios = require('axios');
-var auth = require('./lib/auth');
+var actions = require('./lib/actions');
 var config = require('./lib/config');
 
 function client(localConfig) {
   localConfig = localConfig || {};
-  var _config = Object.assign(config, localConfig);
 
-  function reqInstance (method, path, data) {
-    var request = axios.create({
-      baseURL: _config.RF_BASE_URL + '/v1',
-      headers: {
-        'client-id': _config.RF_CLIENT_ID,
-        'signature': auth.createDigest(path, data, _config.RF_SECRET)
-      }
-    });
-    switch (method) {
-      case 'GET':
-      case 'get':
-        request = request.get(path);
-        break;
-      case 'PUT':
-      case 'put':
-        request = request.put(path, data);
-        break;
-      case 'POST':
-      case 'post':
-        request = request.post(path, data);
-        break;
-      case 'PATCH':
-      case 'patch':
-        request = request.patch(path, data);
-        break;
-      case 'DELETE':
-      case 'delete':
-        request = request.delete(path)
-        break;
-    }
-    return request
-      .then(function (resp) {
-        return resp.data;
-      })
-      .catch(function (err) {
-        return handleError(err);
-      })
-  }
+  if (localConfig.hasOwnProperty('RF_CLIENT_ID') && localConfig.hasOwnProperty('RF_SECRET')) return actions(localConfig);
 
-  function handleError(err) {
-    if (err.response && err.response.data) return err.response.data;
-    if (err.message) return err.message;
-    if (err.error) return err.error;
-  }
-
-  return {
-
-    // USERS
-    getUser: function () {
-      return reqInstance('GET', '/users/me')
-
-    },
-
-    updateUser: function (body) {
-      // check body is not null, not an array, is a valid object
-      if (body !== null && !(body instanceof Array) && typeof body !== 'object') {
-        return Promise.reject(function () {
-          throw Error('body must be an object');
-        });
-      }
-      return reqInstance('PUT', '/users/me', body);
-    },
-
-    // BENEFICIARIES
-
-    getBeneficiaries: function () {
-      return reqInstance('GET', '/beneficiaries');
-    },
-
-    getBeneficiary: function (id) {
-      return reqInstance('GET', '/beneficiaries/' + id);
-    },
-
-    createBeneficiary: function (body) {
-      return reqInstance('POST', '/beneficiaries', body);
-    },
-
-    updateBeneficiary: function (id, body) {
-      return reqInstance('PUT', '/beneficiaries/' + id, body);
-    },
-
-    // TRANSFERS
-
-    createTransfer: function (body) {
-      return reqInstance('POST', '/transfers', body);
-    },
-
-    getTransfer: function (transferUuid) {
-      return reqInstance('GET', '/transfers/' + transferUuid);
-    },
-
-    getAllTransfers: function () {
-      return reqInstance('GET', '/transfers');
-    },
-
-    getBalance: function () {
-      return reqInstance('GET', '/balance');
-    }
-  };
+  return actions(config.setConfig());
 };
-
-module.exports = client();
 
 module.exports.Instance = function(localConfig) {
   localConfig = localConfig || {};
