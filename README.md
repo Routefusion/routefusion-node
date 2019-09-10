@@ -443,3 +443,269 @@ response
     "balance": 200
 }
 ```
+
+## Verify
+
+### Send Verification Data
+```js
+const rf = require('routefusion-sdk').Instance();
+
+let userUuid = 'a1d40a18-723d-45fe-b362-10a94d5072bf';
+
+let verificationData = {
+  agreedToTerms: true,
+  allowAccountManagement: true,
+  address: "600 Congress Ave.",
+  city: "Austin",
+  companyName: "Routefusion",
+  country: "US",
+  dateOfIncorporation: "2009-04-07",
+  dba: true,
+  dbaName: "Some Cool Name",
+  incorporationNumber: "29-1234567",
+  officers: [
+    {
+      address: "777 Lucky St.",
+      citizenship: "US",
+      city: "Palmer",
+      dob: "1978-06-22",
+      firstName: "John",
+      idNumber: "123456789",
+      idType: "ssn",
+      jobTitle: "Director of Sales",
+      lastName: "Doe",
+      owner: true,
+      ownership: "50",
+      postalCode: "78949",
+      state: "TX",
+      title: "Mr."
+    }
+  ],
+  owners: [
+    {
+      address: "900 Test Dr.",
+      citizenship: "US",
+      city: "Goergetown",
+      dob: "1981-03-23",
+      firstName: "Jason",
+      idNumber: "987654321",
+      idType: "ssn",
+      jobTitle: "Technical Director",
+      lastName: "Stathom",
+      owner: true,
+      ownership: "50",
+      postalCode: "75765",
+      state: "TX",
+      title: "Mr."
+    }
+  ],
+  payments: {
+    countries: [
+      "IT",
+      "MX",
+      "AU"
+    ],
+    frequency: "monthly",
+    purpose: "Contract Labor",
+    volume: "100000"
+  },
+  phone: "88881355888",
+  postalCode: "75745",
+  state: "TX",
+  structure: "llc",
+  website: "www.testCompany.com"
+};
+
+rf.sendVerificationData(verificationData, userUuid)
+  .then(resp => resp)
+  .catch(err => err);
+```
+
+response
+
+```json
+{ 
+  "message": "Success"
+}
+```
+
+### Get Verification Data
+```js
+const rf = require('routefusion-sdk').Instance();
+
+let userUuid = 'a1d40a18-723d-45fe-b362-10a94d5072bf';
+
+rf.getVerificationData(userUuid)
+  .then(resp => resp)
+  .catch(err => err);
+```
+
+response
+
+```json
+{
+  "owners": [
+    {
+      "address": "900 Test Dr.",
+      "citizenship": "US",
+      "city": "Goergetown",
+      "dob": "1981-03-23",
+      "firstName": "Jason",
+      "idNumber": "987654321",
+      "idType": "ssn",
+      "jobTitle": "Technical Director",
+      "lastName": "Stathom",
+      "owner": true,
+      "ownership": "50",
+      "postalCode": "75765",
+      "state": "TX",
+      "title": "Mr."
+    }
+  ],
+  "dbaName": "Some Cool Name",
+  "dateOfIncorporation": "2009-04-07",
+  "phone": "88881355888",
+  "companyName": "Routefusion",
+  "allowAccountManagement": true,
+  "dba": true,
+  "agreedToTerms": true,
+  "address": "600 Congress Ave",
+  "postalCode": "75745",
+  "incorporationNumber": "29-1234567",
+  "state": "TX",
+  "structure": "llc",
+  "officers": [
+    {
+      "address": "777 Lucky St.",
+      "citizenship": "US",
+      "city": "Palmer",
+      "dob": "1978-06-22",
+      "firstName": "John",
+      "idNumber": "123456789",
+      "idType": "ssn",
+      "jobTitle": "Director of Sales",
+      "lastName": "Doe",
+      "owner": true,
+      "ownership": "50",
+      "postalCode": "78949",
+      "state": "TX",
+      "title": "Mr."
+    }
+  ],
+  "payments": {
+    "volume": "100000",
+    "frequency": "monthly",
+    "countries": [
+      "IT",
+      "MX",
+      "AU"
+    ],
+    "purpose": "Contract Labor"
+  },
+  "website": "www.testCompany.com",
+  "city": "Austin",
+  "country": "US"
+}
+```
+
+### Update Verification Data
+```js
+const rf = require('routefusion-sdk').Instance();
+
+let userUuid = 'a1d40a18-723d-45fe-b362-10a94d5072bf';
+
+let verificationData = {
+  agreedToTerms: true,
+  allowAccountManagement: true,
+  address: "1234 Updated Address",
+  city: "Austin",
+  companyName: "Routefusion",
+  country: "US",
+  dateOfIncorporation: "2009-04-07",
+  dba: true,
+  dbaName: "Updated Cool Name",
+  incorporationNumber: "29-1234567",
+  officers: [
+    {
+      address: "777 Lucky St.",
+      citizenship: "US",
+      city: "Palmer",
+      dob: "1978-06-22",
+      firstName: "John",
+      idNumber: "123456789",
+      idType: "ssn",
+      jobTitle: "Director of Sales",
+      lastName: "Doe",
+      owner: true,
+      ownership: "50",
+      postalCode: "78949",
+      state: "TX",
+      title: "Mr."
+    }
+  ],
+  owners: [
+    {
+      address: "900 Test Dr.",
+      citizenship: "US",
+      city: "Goergetown",
+      dob: "1981-03-23",
+      firstName: "Jason",
+      idNumber: "987654321",
+      idType: "ssn",
+      jobTitle: "Technical Director",
+      lastName: "Stathom",
+      owner: true,
+      ownership: "50",
+      postalCode: "75765",
+      state: "TX",
+      title: "Mr."
+    }
+  ],
+  payments: {
+    countries: [
+      "IT",
+      "MX",
+      "AU"
+    ],
+    frequency: "monthly",
+    purpose: "Contract Labor",
+    volume: "100000"
+  },
+  phone: "88881355888",
+  postalCode: "75745",
+  state: "TX",
+  structure: "llc",
+  website: "www.testCompany.com"
+};
+
+rf.updateVerificationData(verificationData, userUuid)
+  .then(resp => resp)
+  .catch(err => err);
+```
+
+response
+
+```json
+{ 
+  "message": "Success"
+}
+```
+
+### Get Verification Data
+```js
+const rf = require('routefusion-sdk').Instance();
+
+let userUuid = 'a1d40a18-723d-45fe-b362-10a94d5072bf';
+
+rf.deleteVerificationData(userUuid)
+  .then(resp => resp)
+  .catch(err => err);
+```
+
+response
+
+```json
+{
+  "message": "Success"
+}
+```
