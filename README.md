@@ -691,7 +691,7 @@ response
 }
 ```
 
-### Get Verification Data
+### Delete Verification Data
 ```js
 const rf = require('routefusion-sdk').Instance();
 
