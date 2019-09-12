@@ -425,6 +425,43 @@ response:
 }
 ```
 
+### Cancel Transfer
+```js
+const rf = require('routefusion-sdk').Instance();
+
+let transferUuid = '1c511f62-f8b1-4070-a27a-c1581e7fg79a';
+
+rf.cancelTransfer(transferUuid)
+  .then(resp => resp)
+  .catch(err => err)
+```
+
+response:
+```json
+{
+    "message": "transfer 1c511f62-f8b1-4070-a27a-c1581e7fg79a cancelled"
+}
+```
+
+### Cancel Transfer on behalf of User
+```js
+const rf = require('routefusion-sdk').Instance();
+
+let transferUuid = '1c511f62-f8b1-4070-a27a-c1581e7fg79a';
+let userUuid = 'd48cb8b3-8945-4748-9bed-kd3d9vc15m';
+
+rf.cancelTransferForUser(userUuid, transferUuid)
+  .then(resp => resp)
+  .catch(err => err)
+```
+
+response:
+```json
+{
+    "message": "transfer 1c511f62-f8b1-4070-a27a-c1581e7fg79a cancelled"
+}
+```
+
 ## Balance
 
 ### Get Balance
