@@ -6,6 +6,7 @@
 - [Beneficiaries](#Beneficiaries)
 - [Transfers](#Transfers)
 - [Balance](#Balance)
+- [Verify](#Verify)
 
 <a name="get_started"></a>
 ## Get Started
