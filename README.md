@@ -1,4 +1,5 @@
 # Routefusion Node.js SDK
+Please see the [wiki](https://github.com/Routefusion/routefusion-node/wiki) for more detailed information about Routefusion's primary concepts.
 
 ## Contents
 - [Get Started](#get_started)
