@@ -1,4 +1,5 @@
 # Routefusion Node.js SDK
+Please see the [wiki](https://github.com/Routefusion/routefusion-node/wiki) for more detailed information about Routefusion's primary concepts.
 
 ## Contents
 - [Get Started](#get_started)
@@ -6,6 +7,7 @@
 - [Beneficiaries](#Beneficiaries)
 - [Transfers](#Transfers)
 - [Balance](#Balance)
+- [Verify](#Verify)
 
 <a name="get_started"></a>
 ## Get Started
