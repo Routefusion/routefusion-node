@@ -1,5 +1,5 @@
-var actions = require('./lib/actions');
-var config = require('./lib/config');
+const actions = require('./lib/actions');
+const config = require('./lib/config');
 
 function client(localConfig) {
   localConfig = localConfig || {};
