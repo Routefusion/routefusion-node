@@ -485,7 +485,8 @@ response
 ```json
 {
     "source_currency": "USD",
-    "destination_currency": "MXN" 
+    "destination_currency": "MXN",
+    "rate": 1.24
 }
 ```
 
