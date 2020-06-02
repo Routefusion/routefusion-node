@@ -464,6 +464,32 @@ response:
 }
 ```
 
+## Rates
+
+### Get Rate
+```js
+const rf = require('routefusion-sdk').Instance();
+
+const body = { 
+  source_currency: "USD",
+  destination_currency: "MXN"
+}
+
+rf.getRate(body)
+  .then(resp => resp)
+  .catch(err => err)
+```
+
+response
+
+```json
+{
+    "source_currency": "USD",
+    "destination_currency": "MXN",
+    "rate": 1.24
+}
+```
+
 ## Balance
 
 ### Get Balance
