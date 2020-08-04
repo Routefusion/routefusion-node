@@ -169,7 +169,7 @@ let body = {
   bank_country: 'US'
 };
 
-rf.createUserAccounts(body)
+rf.createUserAccount(body)
   .then(resp => resp)
   .catch(err => err)
 ```
@@ -215,7 +215,7 @@ response:
 ```js
 const rf = require('routefusion-sdk').Instance();
 
-rf.getUserAccountsByUuid(userUuid, accountUuid)
+rf.getUserAccountByUuid(userUuid, accountUuid)
   .then(resp => resp)
   .catch(err => err)
 ```
