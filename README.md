@@ -156,6 +156,89 @@ response:
 }
 ```
 
+### Create User account
+
+```js
+const rf = require('routefusion-sdk').Instance();
+
+let body = {
+  name_on_account: 'Bob TheBuilder',
+  account_number: '123',
+  routing_number: '1234',
+  currency: 'USD',
+  bank_country: 'US'
+};
+
+rf.createUserAccounts(body)
+  .then(resp => resp)
+  .catch(err => err)
+```
+response:
+```json
+{
+    "uuid": "d48cb8b3-8945-4748-9bed-kd3d9vc15m"
+}
+```
+
+### Get User accounts
+
+```js
+const rf = require('routefusion-sdk').Instance();
+
+// This only returns one account
+rf.getUserAccounts(userUuid)
+  .then(resp => resp)
+  .catch(err => err)
+```
+response:
+```json
+{
+    "id": 6,
+    "uuid": "b45b64de-c620-4f18-bfad-5bdefcb522c1",
+    "user_id": 1,
+    "company_name": "",
+    "account_number": "123",
+    "routing_number": "123",
+    "bank_name": "Citibank",
+    "bank_address": "5252 Madison Ave.",
+    "default_currency": "USD",
+    "created_at": "2018-12-14T00:41:38.661Z",
+    "name_on_account": "bob theBuilder",
+    "currency": "1231231234",
+    "primary_account": true,
+    "bank_country": "us"
+}
+```
+
+### Get User accounts byUuid
+
+```js
+const rf = require('routefusion-sdk').Instance();
+
+rf.getUserAccountsByUuid(userUuid, accountUuid)
+  .then(resp => resp)
+  .catch(err => err)
+```
+response:
+```json
+{
+    "id": 6,
+    "uuid": "b45b64de-c620-4f18-bfad-5bdefcb522c1",
+    "user_id": 1,
+    "company_name": "",
+    "account_number": "123",
+    "routing_number": "123",
+    "bank_name": "Citibank",
+    "bank_address": "5252 Madison Ave.",
+    "default_currency": "USD",
+    "created_at": "2018-12-14T00:41:38.661Z",
+    "name_on_account": "bob theBuilder",
+    "currency": "1231231234",
+    "primary_account": true,
+    "bank_country": "us"
+}
+```
+
 ## Beneficiaries
 
 ### Get Beneficiaries
