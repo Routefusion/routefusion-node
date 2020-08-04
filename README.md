@@ -239,6 +239,36 @@ response:
 }
 ```
 
+## Banks
+
+### Find a bank
+
+```javascript
+const rf = require('routefusion-sdk').Instance();
+
+const findByIBAN = {
+  iban: 'GB29NWBK60161331926819'
+};
+
+rf.findBank(findByIBAN)
+```
+response:
+```json
+{
+  "bank_name": "NATIONAL WESTMINSTER BANK PLC",
+  "branch_name": "NATIONAL WESTMINSTER BANK PLC",
+  "bank_address1": "PREMIER PLACE, DEVONSHIRE SQUARE",
+  "bank_address2": null,
+  "bank_city": "LONDON",
+  "bank_state_province": null,
+  "bank_country": "GB",
+  "bank_postal_code": "EC2M 4XB",
+  "swift_bic": "NWBKGB2LXXX",
+  "bank_code": null,
+  "branch_code": "601613"
+}
+```
+
 ## Beneficiaries
 
 ### Get Beneficiaries
@@ -553,7 +583,7 @@ response:
 ```js
 const rf = require('routefusion-sdk').Instance();
 
-const body = { 
+const body = {
   source_currency: "USD",
   destination_currency: "MXN"
 }
@@ -672,7 +702,7 @@ rf.sendVerificationData(verificationData, userUuid)
 response
 
 ```json
-{ 
+{
   "message": "Success"
 }
 ```
@@ -834,7 +864,7 @@ rf.updateVerificationData(verificationData, userUuid)
 response
 
 ```json
-{ 
+{
   "message": "Success"
 }
 ```
