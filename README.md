@@ -192,7 +192,7 @@ rf.getUserAccounts(userUuid)
 ```
 response:
 ```json
-{
+[{
     "id": 6,
     "uuid": "b45b64de-c620-4f18-bfad-5bdefcb522c1",
     "user_id": 1,
@@ -207,7 +207,7 @@ response:
     "currency": "1231231234",
     "primary_account": true,
     "bank_country": "us"
-}
+}]
 ```
 
 ### Get User accounts byUuid
