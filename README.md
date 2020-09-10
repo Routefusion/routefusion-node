@@ -349,9 +349,10 @@ const transferBatchId = "BA-c96f27dd-50d2-4cf9-be30-5006bf6fa94b";
 rf.createQuoteBatch(transferBatchId);
 ```
 response:
+*note the uuid here is the Quote Batch uuid*
 ```json
 {
-    "uuid": "cfdc73e6-92cb-493a-8a76-f9b9f84f1bb9", // Quote Batch UUID
+    "uuid": "cfdc73e6-92cb-493a-8a76-f9b9f84f1bb9",
     "quotes": [
         {
             "quote_uuid": "QU12bf9abb-da29-47dc-abb6-84b66bdf2545",
