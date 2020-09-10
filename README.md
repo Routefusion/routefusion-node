@@ -274,9 +274,9 @@ response:
 ### Get Transfer Batch
 ```js
 const rf = require('routefusion-sdk').Instance();
-const id = "3156709c-51ab-4665-9159-b4875d1e427e";
+const uuid = "BA-c96f27dd-50d2-4cf9-be30-5006bf6fa94b";
 
-rf.getTransferBatch(id)
+rf.getTransferBatch(uuid)
   .then(resp => resp)
   .catch(err => err)
 ```
@@ -351,7 +351,7 @@ rf.createQuoteBatch(transferBatchId);
 response:
 ```json
 {
-    "uuid": "cfdc73e6-92cb-493a-8a76-f9b9f84f1bb9",
+    "uuid": "cfdc73e6-92cb-493a-8a76-f9b9f84f1bb9", // Quote Batch UUID
     "quotes": [
         {
             "quote_uuid": "QU12bf9abb-da29-47dc-abb6-84b66bdf2545",
@@ -378,9 +378,9 @@ response:
 ### Process Transfer Batch
 ```js
 const rf = require('routefusion-sdk').Instance();
-const id = "BA-c96f27dd-50d2-4cf9-be30-5006bf6fa94b";
+const uuid = "BA-c96f27dd-50d2-4cf9-be30-5006bf6fa94b";
 
-rf.processTransferBatch(id)
+rf.processTransferBatch(uuid)
   .then(resp => resp)
   .catch(err => err)
 ```
