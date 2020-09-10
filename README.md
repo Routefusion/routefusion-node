@@ -269,6 +269,143 @@ response:
 }
 ```
 
+## Batches
+
+### Get Transfer Batch
+```js
+const rf = require('routefusion-sdk').Instance();
+const uuid = "BA-c96f27dd-50d2-4cf9-be30-5006bf6fa94b";
+
+rf.getTransferBatch(uuid)
+  .then(resp => resp)
+  .catch(err => err)
+```
+response:
+```json
+{
+    "uuid": "BA-c96f27dd-50d2-4cf9-be30-5006bf6fa94b",
+    "status": "created",
+    "transfers": [
+        {
+            "source_currency": null,
+            "source_amount": "1000.00",
+            "destination_amount": null,
+            "beneficiary_uuid": "b45b64de-c620-4f18-bfad-5bdefcb522c1"
+        },
+        {
+            "source_currency": null,
+            "source_amount": "250.00",
+            "destination_amount": null,
+            "beneficiary_uuid": "27bdb938-3d45-4b64-bf39-1eb7602c8cd4"
+        }
+    ]
+}
+```
+
+### Create Transfer Batch
+```js
+const rf = require('routefusion-sdk').Instance();
+
+const batch = {
+  transfers: [
+    {
+      source_amount: 1000,
+      beneficiary_uuid: "b45b64de-c620-4f18-bfad-5bdefcb522c1"
+    },
+    {
+      source_amount: 250,
+      beneficiary_uuid: "27bdb938-3d45-4b64-bf39-1eb7602c8cd4"
+    }
+  ]
+}
+
+rf.createTransferBatch(batch)
+  .then(resp => resp)
+  .catch(err => err)
+```
+response:
+```json
+{
+    "uuid": "BA-c96f27dd-50d2-4cf9-be30-5006bf6fa94b",
+    "status": "created",
+    "transfers": [
+        {
+            "source_amount": "1000.00",
+            "beneficiary_uuid": "b45b64de-c620-4f18-bfad-5bdefcb522c1"
+        },
+        {
+            "source_amount": "250.00",
+            "beneficiary_uuid": "27bdb938-3d45-4b64-bf39-1eb7602c8cd4"
+        }
+    ]
+}
+```
+### Create Quote Batch
+```js
+const rf = require('routefusion-sdk').Instance();
+
+const transferBatchId = "BA-c96f27dd-50d2-4cf9-be30-5006bf6fa94b";
+
+rf.createQuoteBatch(transferBatchId);
+```
+response:
+*note the uuid here is the Quote Batch uuid*
+```json
+{
+    "uuid": "cfdc73e6-92cb-493a-8a76-f9b9f84f1bb9",
+    "quotes": [
+        {
+            "quote_uuid": "QU12bf9abb-da29-47dc-abb6-84b66bdf2545",
+            "source_currency": "SGD",
+            "destination_currency": "HKD",
+            "rate": "5.7445",
+            "inverted_rate": "0.17407955435634084",
+            "fee": "3.00",
+            "payment_method": "local"
+        },
+        {
+            "quote_uuid": "QUd8b6daba-9cda-4359-acae-932818ccccc0",
+            "source_currency": "SGD",
+            "destination_currency": "USD",
+            "rate": "0.7326",
+            "inverted_rate": "1.365001365001365",
+            "fee": "3.00",
+            "payment_method": "local"
+        }
+    ],
+    "expires_at": "2020-09-10T16:39:41.186Z"
+}
+```
+### Process Transfer Batch
+```js
+const rf = require('routefusion-sdk').Instance();
+const uuid = "BA-c96f27dd-50d2-4cf9-be30-5006bf6fa94b";
+
+rf.processTransferBatch(uuid)
+  .then(resp => resp)
+  .catch(err => err)
+```
+response:
+```json
+{
+    "uuid": "BA-c96f27dd-50d2-4cf9-be30-5006bf6fa94b",
+    "status": "processing",
+    "transfers": [
+        {
+            "source_currency": null,
+            "source_amount": "1000.00",
+            "destination_amount": null,
+            "beneficiary_uuid": "b45b64de-c620-4f18-bfad-5bdefcb522c1"
+        },
+        {
+            "source_currency": null,
+            "source_amount": "250.00",
+            "destination_amount": null,
+            "beneficiary_uuid": "27bdb938-3d45-4b64-bf39-1eb7602c8cd4"
+        }
+    ]
+}
+```
 ## Beneficiaries
 
 ### Get Beneficiaries
