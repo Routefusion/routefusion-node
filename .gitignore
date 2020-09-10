@@ -2,3 +2,4 @@
 .env
 spec/
 node_modules
+built/

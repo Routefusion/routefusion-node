@@ -1,6 +1,6 @@
-const crypto = require('crypto');
+import * as crypto from 'crypto';
 
-exports.createDigest = function (path, data, secret) {
+export function createDigest(path: string, data: string | object | undefined, secret: string) {
   // check data is not null or array and is valid object
   if (data) {
     data = JSON.stringify(data);

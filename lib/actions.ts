@@ -1,9 +1,13 @@
-const axios = require('axios');
-const auth = require('./auth');
-const config = require('../lib/config');
+import axios from 'axios';
+import auth from './auth';
+import config from './config';
+
 let _config;
 
-module.exports = function (config) {
+export type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'OPTIONS' | 'DELETE';
+export type RequestData = 'object';
+
+export default function (config) {
   // set global config
   _config = config || {};
 
@@ -106,7 +110,7 @@ module.exports = function (config) {
       return reqInstance('DELETE', '/users/' + userUuid + '/verify');
     },
 
-     // Webhooks
+    // Webhooks
     createWebhook: function (body) {
       return reqInstance('POST', '/webhooks', body);
     },
@@ -132,7 +136,7 @@ module.exports = function (config) {
 
 // PRIVATE
 
-function reqInstance (method, path, data) {
+function reqInstance(method: HttpMethod, path: string, data?: RequestData) {
   let request = axios.create({
     baseURL: _config.RF_BASE_URL + '/v1',
     headers: {
@@ -142,23 +146,18 @@ function reqInstance (method, path, data) {
   });
   switch (method) {
     case 'GET':
-    case 'get':
       request = request.get(path);
       break;
     case 'PUT':
-    case 'put':
       request = request.put(path, data);
       break;
     case 'POST':
-    case 'post':
       request = request.post(path, data);
       break;
     case 'PATCH':
-    case 'patch':
       request = request.patch(path, data);
       break;
     case 'DELETE':
-    case 'delete':
       request = request.delete(path)
       break;
   }
@@ -171,7 +170,7 @@ function reqInstance (method, path, data) {
     })
 }
 
-function reqInstanceWithBody(method, path, data) {
+function reqInstanceWithBody(method: HttpMethod, path: string, data?: RequestData) {
   // check data is not null, not an array, is a valid object
   if (data !== null && !(data instanceof Array) && typeof data !== 'object') {
     return Promise.reject(function () {
