@@ -1024,3 +1024,23 @@ response
   "message": "Success"
 }
 ```
+
+## Wallets
+```js
+const rf = require('routefusion-sdk').Instance();
+
+rf.getWalletBalances()
+  .then(resp => resp)
+  .catch(err => err);
+```
+
+response
+
+```json
+{
+  "usd": {
+    "liquidity_provider_account": 100
+  }
+}
+```
+
