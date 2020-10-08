@@ -8,3 +8,6 @@
 
 ## 2.10.0
 - [actions] feat: Add support for batches (#28)
+
+## 2.11.0
+- [actions] feat: Add support for wallets (#29)
