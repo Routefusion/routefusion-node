@@ -1,6 +1,6 @@
 {
   "name": "routefusion-sdk",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "description": "Routefusion node.js SDK",
   "main": "index.js",
   "scripts": {
