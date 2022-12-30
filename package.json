@@ -22,7 +22,7 @@
     "@stryker-mutator/mocha-framework": "^2.1.0",
     "@stryker-mutator/mocha-runner": "^2.1.0",
     "chai": "^4.2.0",
-    "mocha": "^6.2.0",
+    "mocha": "^10.2.0",
     "sinon": "^7.4.2"
   }
 }
